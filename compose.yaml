@@ -1,0 +1,8 @@
+services:
+  php:
+    image: result-type:0.x
+    container_name: result-type-0.x
+    tty: true
+    volumes:
+      - .:/var/www/html
+      - ./php.ini:/usr/local/etc/php/php.ini
