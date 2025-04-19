@@ -27,13 +27,19 @@ class OkTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('provideGetValue')]
-    public function getValue(mixed $value): void
+    public function isErr(): void
     {
-        $this->assertSame($value, new Ok($value)->getValue());
+        $this->assertFalse(new Ok(null)->isErr());
     }
 
-    public static function provideGetValue(): array
+    #[Test]
+    #[DataProvider('provideUnwrap')]
+    public function unwrap(mixed $value): void
+    {
+        $this->assertSame($value, new Ok($value)->unwrap());
+    }
+
+    public static function provideUnwrap(): array
     {
         return [
             [null],
@@ -45,12 +51,12 @@ class OkTest extends TestCase
     }
 
     #[Test]
-    public function throwWhenCalledGetErr(): void
+    public function throwWhenCalledUnwrapErr(): void
     {
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('Result is not Err.');
 
-        new Ok(null)->getErr();
+        new Ok(null)->unwrapErr();
     }
 }
 
