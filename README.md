@@ -53,8 +53,8 @@ $handler = new Handler();
 $result = $handler->handle();
 
 if ($result->isOk()) {
-    $result->getValue(); // Access to Success
+    $result->unwrap(); // Access to Success
 } else {
-    $result->getError(); // Access to Error
+    $result->unwrapErr(); // Access to Error
 }
 ```
