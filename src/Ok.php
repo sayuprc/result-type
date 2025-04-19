@@ -33,12 +33,12 @@ class Ok implements Result
     /**
      * @return T
      */
-    public function getValue(): mixed
+    public function unwrap(): mixed
     {
         return $this->value;
     }
 
-    public function getErr(): mixed
+    public function unwrapErr(): mixed
     {
         throw new LogicException('Result is not Err.');
     }

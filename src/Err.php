@@ -30,7 +30,7 @@ class Err implements Result
         return true;
     }
 
-    public function getValue(): mixed
+    public function unwrap(): mixed
     {
         throw new LogicException('Result is not Ok.');
     }
@@ -38,7 +38,7 @@ class Err implements Result
     /**
      * @return E
      */
-    public function getErr(): mixed
+    public function unwrapErr(): mixed
     {
         return $this->error;
     }
