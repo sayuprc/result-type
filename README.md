@@ -36,7 +36,7 @@ class Error
 class Handler
 {
     /**
-      * @return Result<T, E>
+      * @return Result<Success, Error>
       */
     function handle(): Result
     {
