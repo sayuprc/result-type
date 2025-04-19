@@ -27,6 +27,12 @@ class ErrTest extends TestCase
     }
 
     #[Test]
+    public function isErr(): void
+    {
+        $this->assertTrue(new Err(null)->isErr());
+    }
+
+    #[Test]
     public function throwWhenCalledUnwrap(): void
     {
         $this->expectException(LogicException::class);
