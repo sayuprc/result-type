@@ -88,6 +88,24 @@ class OkTest extends TestCase
     {
         $this->assertSame('default', new Ok(1)->unwrapErrOr('default'));
     }
+
+    #[Test]
+    public function andThen(): void
+    {
+        $result = new Ok(1)->andThen(fn (int $i) => new Ok($i * 2));
+
+        $this->assertInstanceOf(Ok::class, $result);
+        $this->assertSame(2, $result->unwrap());
+    }
+
+    #[Test]
+    public function orElse(): void
+    {
+        $result = new Ok(1)->orElse(fn (int $i) => new Ok($i * 2));
+
+        $this->assertInstanceOf(Ok::class, $result);
+        $this->assertSame(1, $result->unwrap());
+    }
 }
 
 class OkValue

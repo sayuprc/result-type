@@ -88,6 +88,24 @@ class ErrTest extends TestCase
     {
         $this->assertSame(1, new Err(1)->unwrapErrOr('default'));
     }
+
+    #[Test]
+    public function andThen(): void
+    {
+        $result = new Err(1)->andThen(fn (int $i) => new Err($i * 2));
+
+        $this->assertInstanceOf(Err::class, $result);
+        $this->assertSame(1, $result->unwrapErr());
+    }
+
+    #[Test]
+    public function orElse(): void
+    {
+        $result = new Err(1)->orElse(fn (int $i) => new Err($i * 2));
+
+        $this->assertInstanceOf(Err::class, $result);
+        $this->assertSame(2, $result->unwrapErr());
+    }
 }
 
 class ErrValue
