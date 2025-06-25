@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ResultType;
 
+use Closure;
 use LogicException;
 
 /**
@@ -38,8 +39,22 @@ class Ok implements Result
         return $this->value;
     }
 
+    public function map(Closure $callback): Result
+    {
+        if ($this->isErr()) {
+            return $this;
+        }
+
+        return new Ok($callback($this->unwrap()));
+    }
+
     public function unwrapErr(): mixed
     {
         throw new LogicException('Result is not Err.');
+    }
+
+    public function mapErr(Closure $callback): Result
+    {
+        return $this;
     }
 }
