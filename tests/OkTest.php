@@ -76,6 +76,18 @@ class OkTest extends TestCase
     {
         $this->assertInstanceOf(Ok::class, new Ok(1)->mapErr(fn () => 2));
     }
+
+    #[Test]
+    public function unwrapOr(): void
+    {
+        $this->assertSame(1, new Ok(1)->unwrapOr('default'));
+    }
+
+    #[Test]
+    public function unwrapErrOr(): void
+    {
+        $this->assertSame('default', new Ok(1)->unwrapErrOr('default'));
+    }
 }
 
 class OkValue

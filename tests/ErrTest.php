@@ -76,6 +76,18 @@ class ErrTest extends TestCase
     {
         $this->assertSame(9, new Err(2)->mapErr(fn (int $i) => $i * 2)->mapErr(fn (int $i) => $i + 5)->unwrapErr());
     }
+
+    #[Test]
+    public function unwrapOr(): void
+    {
+        $this->assertSame('default', new Err(1)->unwrapOr('default'));
+    }
+
+    #[Test]
+    public function unwrapErrOr(): void
+    {
+        $this->assertSame(1, new Err(1)->unwrapErrOr('default'));
+    }
 }
 
 class ErrValue

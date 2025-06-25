@@ -22,6 +22,15 @@ interface Result
     public function unwrap(): mixed;
 
     /**
+     * @template TDefault
+     *
+     * @param TDefault $default
+     *
+     * @return T|TDefault
+     */
+    public function unwrapOr(mixed $default): mixed;
+
+    /**
      * @template TReturn
      *
      * @param Closure(T): TReturn $callback
@@ -34,6 +43,15 @@ interface Result
      * @return E
      */
     public function unwrapErr(): mixed;
+
+    /**
+     * @template EDefault
+     *
+     * @param EDefault $default
+     *
+     * @return E|EDefault
+     */
+    public function unwrapErrOr(mixed $default): mixed;
 
     /**
      * @template EReturn
