@@ -67,4 +67,14 @@ class Ok implements Result
     {
         return $this;
     }
+
+    public function andThen(Closure $callback): Result
+    {
+        return $callback($this->value);
+    }
+
+    public function orElse(Closure $callback): Result
+    {
+        return $this;
+    }
 }

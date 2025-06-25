@@ -61,4 +61,24 @@ interface Result
      * @return Result<T, EReturn>
      */
     public function mapErr(Closure $callback): Result;
+
+    /**
+     * @template TValue
+     * @template EError
+     *
+     * @param Closure(T): Result<TValue, EError> $callback
+     *
+     * @return Result<TValue, EError>
+     */
+    public function andThen(Closure $callback): Result;
+
+    /**
+     * @template TValue
+     * @template EError
+     *
+     * @param Closure(E): Result<TValue, EError> $callback
+     *
+     * @return Result<TValue, EError>
+     */
+    public function orElse(Closure $callback): Result;
 }
