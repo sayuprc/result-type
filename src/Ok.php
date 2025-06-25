@@ -43,10 +43,6 @@ class Ok implements Result
 
     public function map(Closure $callback): Result
     {
-        if ($this->isErr()) {
-            return $this;
-        }
-
         return new Ok($callback($this->unwrap()));
     }
 
