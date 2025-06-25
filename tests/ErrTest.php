@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Closure;
 use LogicException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
@@ -60,33 +61,122 @@ class ErrTest extends TestCase
     }
 
     #[Test]
-    public function mapShouldReturnOk(): void
+    public function mapShouldReturnErr(): void
     {
-        $this->assertInstanceOf(Err::class, new Err(1)->mapErr(fn () => 2));
+        $result = new Err(1)->map(fn (int $i) => $i * 2);
+
+        $this->assertInstanceOf(Err::class, $result);
+        $this->assertSame(1, $result->unwrapErr());
     }
 
     #[Test]
-    public function mapErr(): void
+    #[DataProvider('mapErrProvider')]
+    public function mapErr(mixed $expected, mixed $initial, Closure $callback): void
     {
-        $this->assertInstanceOf(Err::class, new Err(1)->mapErr(fn () => 2));
+        $result = new Err($initial)->mapErr($callback);
+
+        $this->assertInstanceOf(Err::class, $result);
+        $this->assertSame($expected, $result->unwrapErr());
+    }
+
+    public static function mapErrProvider(): array
+    {
+        return [
+            [
+                4,
+                2,
+                fn (int $i) => $i * 2,
+            ],
+            [
+                'FizzBuzz',
+                'Fizz',
+                fn (string $i) => $i . 'Buzz',
+            ],
+        ];
     }
 
     #[Test]
-    public function continuousMapErr(): void
+    #[DataProvider('continuousMapErrProvider')]
+    public function continuousMapErr(mixed $expected, mixed $initial, Closure $callback1, Closure $callback2): void
     {
-        $this->assertSame(9, new Err(2)->mapErr(fn (int $i) => $i * 2)->mapErr(fn (int $i) => $i + 5)->unwrapErr());
+        $result = new Err($initial)
+            ->mapErr($callback1)
+            ->mapErr($callback2);
+
+        $this->assertInstanceOf(Err::class, $result);
+        $this->assertSame($expected, $result->unwrapErr());
+    }
+
+    public static function continuousMapErrProvider(): array
+    {
+        return [
+            [
+                9,
+                2,
+                fn (int $i) => $i * 2,
+                fn (int $i) => $i + 5,
+            ],
+            [
+                'FIZZBUZZ',
+                'fizz',
+                fn (string $i) => $i . 'buzz',
+                fn (string $i) => strtoupper($i),
+            ],
+        ];
     }
 
     #[Test]
-    public function unwrapOr(): void
+    public function mapErrWithMap(): void
     {
-        $this->assertSame('default', new Err(1)->unwrapOr('default'));
+        $result = new Err(1)
+            ->mapErr(fn (int $i) => $i * 2)
+            ->map(fn (int $i) => $i * 3)
+            ->mapErr(fn (int $i) => $i * 4);
+
+        $this->assertInstanceOf(Err::class, $result);
+        $this->assertSame(8, $result->unwrapErr());
     }
 
     #[Test]
-    public function unwrapErrOr(): void
+    public function mapWithMapErr(): void
     {
-        $this->assertSame(1, new Err(1)->unwrapErrOr('default'));
+        $result = new Err(1)
+            ->map(fn (int $i) => $i * 2)
+            ->mapErr(fn (int $i) => $i * 3)
+            ->map(fn (int $i) => $i * 4);
+
+        $this->assertInstanceOf(Err::class, $result);
+        $this->assertSame(3, $result->unwrapErr());
+    }
+
+    #[Test]
+    #[DataProvider('unwrapOrProvider')]
+    public function unwrapOr(mixed $expected, mixed $initial): void
+    {
+        $this->assertSame($expected, new Err($initial)->unwrapOr($expected));
+    }
+
+    public static function unwrapOrProvider(): array
+    {
+        return [
+            [0, 1],
+            ['default', 'value'],
+        ];
+    }
+
+    #[Test]
+    #[DataProvider('unwrapOrErrProvider')]
+    public function unwrapErrOr(mixed $expected, mixed $default): void
+    {
+        $this->assertSame($expected, new Err($expected)->unwrapErrOr($default));
+    }
+
+    public static function unwrapOrErrProvider(): array
+    {
+        return [
+            [1, 0],
+            ['value', 'default'],
+        ];
     }
 
     #[Test]
@@ -99,12 +189,34 @@ class ErrTest extends TestCase
     }
 
     #[Test]
+    public function andThenAfterOrElse(): void
+    {
+        $result = new Err(1)
+            ->orElse(fn (int $i) => new Err($i * 2))
+            ->andThen(fn (int $i) => new Err($i * 3));
+
+        $this->assertInstanceOf(Err::class, $result);
+        $this->assertSame(2, $result->unwrapErr());
+    }
+
+    #[Test]
     public function orElse(): void
     {
         $result = new Err(1)->orElse(fn (int $i) => new Err($i * 2));
 
         $this->assertInstanceOf(Err::class, $result);
         $this->assertSame(2, $result->unwrapErr());
+    }
+
+    #[Test]
+    public function orElseAfterAndThen(): void
+    {
+        $result = new Err(1)
+            ->andThen(fn (int $i) => new Err($i * 2))
+            ->orElse(fn (int $i) => new Err($i * 3));
+
+        $this->assertInstanceOf(Err::class, $result);
+        $this->assertSame(3, $result->unwrapErr());
     }
 }
 

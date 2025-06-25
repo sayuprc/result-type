@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Closure;
 use LogicException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
@@ -60,33 +61,122 @@ class OkTest extends TestCase
     }
 
     #[Test]
-    public function map(): void
+    #[DataProvider('mapProvider')]
+    public function map(mixed $expected, mixed $initial, Closure $callback): void
     {
-        $this->assertSame(4, new Ok(2)->map(fn (int $i) => $i * 2)->unwrap());
+        $result = new Ok($initial)->map($callback);
+
+        $this->assertInstanceOf(Ok::class, $result);
+        $this->assertSame($expected, $result->unwrap());
+    }
+
+    public static function mapProvider(): array
+    {
+        return [
+            [
+                4,
+                2,
+                fn (int $i) => $i * 2,
+            ],
+            [
+                'FizzBuzz',
+                'Fizz',
+                fn (string $i) => $i . 'Buzz',
+            ],
+        ];
     }
 
     #[Test]
-    public function continuousMap(): void
+    #[DataProvider('continuousMapProvider')]
+    public function continuousMap(mixed $expected, mixed $initial, Closure $callback1, Closure $callback2): void
     {
-        $this->assertSame(9, new Ok(2)->map(fn (int $i) => $i * 2)->map(fn (int $i) => $i + 5)->unwrap());
+        $result = new Ok($initial)
+            ->map($callback1)
+            ->map($callback2);
+
+        $this->assertInstanceOf(Ok::class, $result);
+        $this->assertSame($expected, $result->unwrap());
+    }
+
+    public static function continuousMapProvider(): array
+    {
+        return [
+            [
+                9,
+                2,
+                fn (int $i) => $i * 2,
+                fn (int $i) => $i + 5,
+            ],
+            [
+                'FIZZBUZZ',
+                'fizz',
+                fn (string $i) => $i . 'buzz',
+                fn (string $i) => strtoupper($i),
+            ],
+        ];
     }
 
     #[Test]
     public function mapErrShouldReturnOk(): void
     {
-        $this->assertInstanceOf(Ok::class, new Ok(1)->mapErr(fn () => 2));
+        $result = new Ok(1)->mapErr(fn (int $i) => $i * 2);
+
+        $this->assertInstanceOf(Ok::class, $result);
+        $this->assertSame(1, $result->unwrap());
     }
 
     #[Test]
-    public function unwrapOr(): void
+    public function mapWithMapErr(): void
     {
-        $this->assertSame(1, new Ok(1)->unwrapOr('default'));
+        $result = new Ok(1)
+            ->map(fn (int $i) => $i * 2)
+            ->mapErr(fn (int $i) => $i * 3)
+            ->map(fn (int $i) => $i * 4);
+
+        $this->assertInstanceOf(Ok::class, $result);
+        $this->assertSame(8, $result->unwrap());
     }
 
     #[Test]
-    public function unwrapErrOr(): void
+    public function mapErrWithMap(): void
     {
-        $this->assertSame('default', new Ok(1)->unwrapErrOr('default'));
+        $result = new Ok(1)
+            ->mapErr(fn (int $i) => $i * 2)
+            ->map(fn (int $i) => $i * 3)
+            ->mapErr(fn (int $i) => $i * 4);
+
+        $this->assertInstanceOf(Ok::class, $result);
+        $this->assertSame(3, $result->unwrap());
+    }
+
+    #[Test]
+    #[DataProvider('unwrapOrProvider')]
+    public function unwrapOr(mixed $expected, mixed $default): void
+    {
+        $this->assertSame($expected, new Ok($expected)->unwrapOr($default));
+    }
+
+    public static function unwrapOrProvider(): array
+    {
+        return [
+            [1, 0],
+            ['value', 'default'],
+        ];
+    }
+
+    #[Test]
+    #[DataProvider('unwrapErrOrProvider')]
+    public function unwrapErrOr(mixed $expected, mixed $initial): void
+    {
+        $this->assertSame($expected, new Ok($initial)->unwrapErrOr($expected));
+    }
+
+    public static function unwrapErrOrProvider(): array
+    {
+        return [
+            [0, 1],
+            ['default', 'value'],
+        ];
     }
 
     #[Test]
@@ -99,12 +189,34 @@ class OkTest extends TestCase
     }
 
     #[Test]
+    public function andThenAfterOrElse(): void
+    {
+        $result = new Ok(1)
+            ->orElse(fn (int $i) => new Ok($i * 2))
+            ->andThen(fn (int $i) => new Ok($i * 3));
+
+        $this->assertInstanceOf(Ok::class, $result);
+        $this->assertSame(3, $result->unwrap());
+    }
+
+    #[Test]
     public function orElse(): void
     {
         $result = new Ok(1)->orElse(fn (int $i) => new Ok($i * 2));
 
         $this->assertInstanceOf(Ok::class, $result);
         $this->assertSame(1, $result->unwrap());
+    }
+
+    #[Test]
+    public function orElseAfterAndThen(): void
+    {
+        $result = new Ok(1)
+            ->andThen(fn (int $i) => new Ok($i * 2))
+            ->orElse(fn (int $i) => new Ok($i * 3));
+
+        $this->assertInstanceOf(Ok::class, $result);
+        $this->assertSame(2, $result->unwrap());
     }
 }
 
