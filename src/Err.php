@@ -46,9 +46,6 @@ class Err implements Result
         return $this;
     }
 
-    /**
-     * @return E
-     */
     public function unwrapErr(): mixed
     {
         return $this->error;
@@ -61,10 +58,6 @@ class Err implements Result
 
     public function mapErr(Closure $callback): Result
     {
-        if ($this->isOk()) {
-            return $this;
-        }
-
         return new Err($callback($this->unwrapErr()));
     }
 

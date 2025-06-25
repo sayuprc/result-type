@@ -31,9 +31,6 @@ class Ok implements Result
         return false;
     }
 
-    /**
-     * @return T
-     */
     public function unwrap(): mixed
     {
         return $this->value;
@@ -46,10 +43,6 @@ class Ok implements Result
 
     public function map(Closure $callback): Result
     {
-        if ($this->isErr()) {
-            return $this;
-        }
-
         return new Ok($callback($this->unwrap()));
     }
 

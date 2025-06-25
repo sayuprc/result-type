@@ -12,16 +12,27 @@ use Closure;
  */
 interface Result
 {
+    /**
+     * Returns true if the result is Ok (success).
+     */
     public function isOk(): bool;
 
+    /**
+     * Returns false if the result is Err (failure).
+     */
     public function isErr(): bool;
 
     /**
+     * Returns the value if the result is Ok.
+     * Trhws an exception if the result is Err.
+     *
      * @return T
      */
     public function unwrap(): mixed;
 
     /**
+     * Returns the value if Ok, or the given default value if Err.
+     *
      * @template TDefault
      *
      * @param TDefault $default
@@ -31,6 +42,9 @@ interface Result
     public function unwrapOr(mixed $default): mixed;
 
     /**
+     * Applies the callback to the value if Ok, and returns a new Result.
+     * If Err, returns the original Result.
+     *
      * @template TReturn
      *
      * @param Closure(T): TReturn $callback
@@ -40,11 +54,16 @@ interface Result
     public function map(Closure $callback): Result;
 
     /**
+     * Returns the error if the result is Err.
+     * Throws an exception if the result is Ok.
+     *
      * @return E
      */
     public function unwrapErr(): mixed;
 
     /**
+     * Returns the error if Err, or the given default value if Ok.
+     *
      * @template EDefault
      *
      * @param EDefault $default
@@ -54,6 +73,9 @@ interface Result
     public function unwrapErrOr(mixed $default): mixed;
 
     /**
+     * Applies the callback to the error if Err, and returns a new Result.
+     * If Ok, returns the original Result.
+     *
      * @template EReturn
      *
      * @param Closure(E): EReturn $callback
@@ -63,22 +85,28 @@ interface Result
     public function mapErr(Closure $callback): Result;
 
     /**
-     * @template TValue
-     * @template EError
+     * If Ok, applies the callback and returns the resulting Result.
+     * If Err, returns the original Result.
      *
-     * @param Closure(T): Result<TValue, EError> $callback
+     * @template TReturn
+     * @template EReturn
      *
-     * @return Result<TValue, EError>
+     * @param Closure(T): Result<TReturn, EReturn> $callback
+     *
+     * @return Result<TReturn, EReturn>
      */
     public function andThen(Closure $callback): Result;
 
     /**
-     * @template TValue
-     * @template EError
+     * If Err, applies the callback and returns the resulting Result.
+     * If Ok, returns the original Result.
      *
-     * @param Closure(E): Result<TValue, EError> $callback
+     * @template TReturn
+     * @template EReturn
      *
-     * @return Result<TValue, EError>
+     * @param Closure(E): Result<TReturn, EReturn> $callback
+     *
+     * @return Result<TReturn, EReturn>
      */
     public function orElse(Closure $callback): Result;
 }
