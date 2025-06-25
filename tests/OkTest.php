@@ -21,25 +21,25 @@ class OkTest extends TestCase
     }
 
     #[Test]
-    public function isOk(): void
+    public function isOkShouldReturnTrue(): void
     {
         $this->assertTrue(new Ok(null)->isOk());
     }
 
     #[Test]
-    public function isErr(): void
+    public function isErrShouldReturnFalse(): void
     {
         $this->assertFalse(new Ok(null)->isErr());
     }
 
     #[Test]
-    #[DataProvider('provideUnwrap')]
+    #[DataProvider('unwrapProvider')]
     public function unwrap(mixed $value): void
     {
         $this->assertSame($value, new Ok($value)->unwrap());
     }
 
-    public static function provideUnwrap(): array
+    public static function unwrapProvider(): array
     {
         return [
             [null],

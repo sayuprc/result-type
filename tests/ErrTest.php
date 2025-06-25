@@ -21,13 +21,13 @@ class ErrTest extends TestCase
     }
 
     #[Test]
-    public function isOk(): void
+    public function isOkShouldReturnFalse(): void
     {
         $this->assertFalse(new Err(null)->isOk());
     }
 
     #[Test]
-    public function isErr(): void
+    public function isErrShouldReturnTrue(): void
     {
         $this->assertTrue(new Err(null)->isErr());
     }
@@ -42,13 +42,13 @@ class ErrTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('provideUnwrapErr')]
+    #[DataProvider('unwrapErrProvider')]
     public function unwrapErr(mixed $value): void
     {
         $this->assertSame($value, new Err($value)->unwrapErr());
     }
 
-    public static function provideUnwrapErr(): array
+    public static function unwrapErrProvider(): array
     {
         return [
             [null],
