@@ -58,6 +58,24 @@ class ErrTest extends TestCase
             [new ErrValue(1, 'name')],
         ];
     }
+
+    #[Test]
+    public function mapShouldReturnOk(): void
+    {
+        $this->assertInstanceOf(Err::class, new Err(1)->mapErr(fn () => 2));
+    }
+
+    #[Test]
+    public function mapErr(): void
+    {
+        $this->assertInstanceOf(Err::class, new Err(1)->mapErr(fn () => 2));
+    }
+
+    #[Test]
+    public function continuousMapErr(): void
+    {
+        $this->assertSame(9, new Err(2)->mapErr(fn (int $i) => $i * 2)->mapErr(fn (int $i) => $i + 5)->unwrapErr());
+    }
 }
 
 class ErrValue
