@@ -58,6 +58,24 @@ class OkTest extends TestCase
 
         new Ok(null)->unwrapErr();
     }
+
+    #[Test]
+    public function map(): void
+    {
+        $this->assertSame(4, new Ok(2)->map(fn (int $i) => $i * 2)->unwrap());
+    }
+
+    #[Test]
+    public function continuousMap(): void
+    {
+        $this->assertSame(9, new Ok(2)->map(fn (int $i) => $i * 2)->map(fn (int $i) => $i + 5)->unwrap());
+    }
+
+    #[Test]
+    public function mapErrShouldReturnOk(): void
+    {
+        $this->assertInstanceOf(Ok::class, new Ok(1)->mapErr(fn () => 2));
+    }
 }
 
 class OkValue
