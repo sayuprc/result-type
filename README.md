@@ -58,3 +58,7 @@ if ($result->isOk()) {
     $result->unwrapErr(); // Access to Error
 }
 ```
+
+## Wiki
+
+For more information, please click [here](https://deepwiki.com/sayuprc/result-type).
