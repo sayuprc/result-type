@@ -36,6 +36,11 @@ class Err implements Result
         throw new LogicException('Result is not Ok.');
     }
 
+    public function unwrapOr(mixed $default): mixed
+    {
+        return $default;
+    }
+
     public function map(Closure $callback): Result
     {
         return $this;
@@ -45,6 +50,11 @@ class Err implements Result
      * @return E
      */
     public function unwrapErr(): mixed
+    {
+        return $this->error;
+    }
+
+    public function unwrapErrOr(mixed $default): mixed
     {
         return $this->error;
     }
