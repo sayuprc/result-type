@@ -46,9 +46,6 @@ class Err implements Result
         return $this;
     }
 
-    /**
-     * @return E
-     */
     public function unwrapErr(): mixed
     {
         return $this->error;

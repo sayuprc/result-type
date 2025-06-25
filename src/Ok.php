@@ -31,9 +31,6 @@ class Ok implements Result
         return false;
     }
 
-    /**
-     * @return T
-     */
     public function unwrap(): mixed
     {
         return $this->value;
