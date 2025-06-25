@@ -28,7 +28,7 @@ interface Result
      *
      * @return Result<TReturn, E>
      */
-    public function map(Closure $callback): self;
+    public function map(Closure $callback): Result;
 
     /**
      * @return E
@@ -42,5 +42,5 @@ interface Result
      *
      * @return Result<T, EReturn>
      */
-    public function mapErr(Closure $callback): self;
+    public function mapErr(Closure $callback): Result;
 }
