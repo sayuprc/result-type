@@ -67,4 +67,14 @@ class Err implements Result
 
         return new Err($callback($this->unwrapErr()));
     }
+
+    public function andThen(Closure $callback): Result
+    {
+        return $this;
+    }
+
+    public function orElse(Closure $callback): Result
+    {
+        return $callback($this->error);
+    }
 }
