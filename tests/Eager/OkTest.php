@@ -229,9 +229,9 @@ class OkTest extends TestCase
     #[Test]
     public function toLazy(): void
     {
-        $reesult = new Ok(1)->toLazy();
+        $result = new Ok(1)->toLazy();
 
-        $this->assertInstanceOf(LazyOk::class, $reesult);
+        $this->assertInstanceOf(LazyOk::class, $result);
     }
 }
 

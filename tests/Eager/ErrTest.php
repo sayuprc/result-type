@@ -229,9 +229,9 @@ class ErrTest extends TestCase
     #[Test]
     public function toLazy(): void
     {
-        $reesult = new Err(1)->toLazy();
+        $result = new Err(1)->toLazy();
 
-        $this->assertInstanceOf(LazyErr::class, $reesult);
+        $this->assertInstanceOf(LazyErr::class, $result);
     }
 }
 

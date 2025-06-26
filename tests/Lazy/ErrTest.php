@@ -267,7 +267,7 @@ class ErrTest extends TestCase
     }
 
     #[Test]
-    public function evaluteCache(): void
+    public function evaluateCache(): void
     {
         $counter = 0;
 
