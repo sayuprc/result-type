@@ -10,6 +10,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use ResultType\Eager\Ok;
+use ResultType\Lazy\Ok as LazyOk;
 use ResultType\Result;
 use stdClass;
 
@@ -223,6 +224,14 @@ class OkTest extends TestCase
     public function match(): void
     {
         $this->assertSame(1, new Ok(1)->match(fn () => 1, fn () => 2));
+    }
+
+    #[Test]
+    public function toLazy(): void
+    {
+        $reesult = new Ok(1)->toLazy();
+
+        $this->assertInstanceOf(LazyOk::class, $reesult);
     }
 }
 

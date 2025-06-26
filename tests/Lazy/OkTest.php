@@ -9,6 +9,7 @@ use LogicException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use ResultType\Eager\Ok as EagerOk;
 use ResultType\Lazy\Ok;
 use ResultType\Result;
 use stdClass;
@@ -312,6 +313,14 @@ class OkTest extends TestCase
         $this->assertSame(21, $c);
         $this->assertSame(11, $mapCounter);
         $this->assertSame(21, $andThenCounter);
+    }
+
+    #[Test]
+    public function toEager(): void
+    {
+        $result = new Ok(fn () => 1)->toEager();
+
+        $this->assertInstanceOf(EagerOk::class, $result);
     }
 }
 

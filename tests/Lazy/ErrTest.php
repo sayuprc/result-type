@@ -9,6 +9,7 @@ use LogicException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use ResultType\Eager\Err as EagerErr;
 use ResultType\Lazy\Err;
 use ResultType\Result;
 use stdClass;
@@ -312,6 +313,14 @@ class ErrTest extends TestCase
         $this->assertSame(21, $c);
         $this->assertSame(11, $mapErrCounter);
         $this->assertSame(21, $orElseCounter);
+    }
+
+    #[Test]
+    public function toEager(): void
+    {
+        $result = new Err(fn () => 1)->toEager();
+
+        $this->assertInstanceOf(EagerErr::class, $result);
     }
 }
 
