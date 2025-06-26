@@ -71,6 +71,15 @@ class Err implements Result
         return $callback($this->error);
     }
 
+    /**
+     * @template TReturn
+     * @template EReturn
+     *
+     * @param Closure(never): TReturn $ok
+     * @param Closure(E): EReturn     $err
+     *
+     * @return EReturn
+     */
     public function match(Closure $ok, Closure $err): mixed
     {
         return $err($this->unwrapErr());

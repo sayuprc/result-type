@@ -71,6 +71,15 @@ class Ok implements Result
         return $this;
     }
 
+    /**
+     * @template TReturn
+     * @template EReturn
+     *
+     * @param Closure(T): TReturn     $ok
+     * @param Closure(never): EReturn $err
+     *
+     * @return TReturn
+     */
     public function match(Closure $ok, Closure $err): mixed
     {
         return $ok($this->unwrap());

@@ -116,12 +116,13 @@ interface Result
      * If the result is Ok, calls the $ok callback with the value and returns its result.
      * If the result is Err, calls the $err callback with the error and returns its result.
      *
-     * @template R
+     * @template TReturn
+     * @template EReturn
      *
-     * @param Closure(T): R $ok
-     * @param Closure(E): R $err
+     * @param Closure(T): TReturn $ok
+     * @param Closure(E): EReturn $err
      *
-     * @return R
+     * @return TReturn|EReturn
      */
     public function match(Closure $ok, Closure $err): mixed;
 }
