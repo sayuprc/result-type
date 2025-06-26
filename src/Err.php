@@ -70,4 +70,9 @@ class Err implements Result
     {
         return $callback($this->error);
     }
+
+    public function match(Closure $ok, Closure $err): mixed
+    {
+        return $err($this->unwrapErr());
+    }
 }

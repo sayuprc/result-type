@@ -70,4 +70,9 @@ class Ok implements Result
     {
         return $this;
     }
+
+    public function match(Closure $ok, Closure $err): mixed
+    {
+        return $ok($this->unwrap());
+    }
 }
