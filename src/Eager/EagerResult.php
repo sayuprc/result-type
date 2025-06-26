@@ -16,6 +16,8 @@ use ResultType\Result;
 interface EagerResult extends Result
 {
     /**
+     * Converts this eager result to lazy result.
+     *
      * @return LazyResult<T, E>
      */
     public function toLazy(): LazyResult;
