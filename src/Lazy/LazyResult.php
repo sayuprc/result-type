@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ResultType\Lazy;
 
+use ResultType\Eager\EagerResult;
 use ResultType\Result;
 
 /**
@@ -14,4 +15,8 @@ use ResultType\Result;
  */
 interface LazyResult extends Result
 {
+    /**
+     * @return EagerResult<T, E>
+     */
+    public function toEager(): EagerResult;
 }

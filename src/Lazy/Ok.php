@@ -6,6 +6,8 @@ namespace ResultType\Lazy;
 
 use Closure;
 use LogicException;
+use ResultType\Eager\EagerResult;
+use ResultType\Eager\Ok as EagerOk;
 use ResultType\Result;
 
 /**
@@ -105,5 +107,10 @@ class Ok implements LazyResult
         }
 
         return $this->value;
+    }
+
+    public function toEager(): EagerResult
+    {
+        return new EagerOk($this->unwrap());
     }
 }

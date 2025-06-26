@@ -6,6 +6,8 @@ namespace ResultType\Eager;
 
 use Closure;
 use LogicException;
+use ResultType\Lazy\LazyResult;
+use ResultType\Lazy\Ok as LazyOk;
 use ResultType\Result;
 
 /**
@@ -84,5 +86,10 @@ class Ok implements EagerResult
     public function match(Closure $ok, Closure $err): mixed
     {
         return $ok($this->unwrap());
+    }
+
+    public function toLazy(): LazyResult
+    {
+        return new LazyOk(fn () => $this->unwrap());
     }
 }
