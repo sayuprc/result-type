@@ -166,13 +166,13 @@ class ErrTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('unwrapOrErrProvider')]
+    #[DataProvider('unwrapErrOrProvider')]
     public function unwrapErrOr(mixed $expected, Closure $initial, mixed $default): void
     {
         $this->assertSame($expected, new Err($initial)->unwrapErrOr($default));
     }
 
-    public static function unwrapOrErrProvider(): array
+    public static function unwrapErrOrProvider(): array
     {
         return [
             [1, fn () => 1, 0],
