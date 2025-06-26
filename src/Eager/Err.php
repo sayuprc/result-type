@@ -56,7 +56,7 @@ class Err implements EagerResult
 
     public function unwrapErrOr(mixed $default): mixed
     {
-        return $this->error;
+        return $this->unwrapErr();
     }
 
     public function mapErr(Closure $callback): Result
@@ -71,7 +71,7 @@ class Err implements EagerResult
 
     public function orElse(Closure $callback): Result
     {
-        return $callback($this->error);
+        return $callback($this->unwrapErr());
     }
 
     /**

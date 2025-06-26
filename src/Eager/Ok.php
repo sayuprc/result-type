@@ -41,7 +41,7 @@ class Ok implements EagerResult
 
     public function unwrapOr(mixed $default): mixed
     {
-        return $this->value;
+        return $this->unwrap();
     }
 
     public function map(Closure $callback): Result
@@ -66,7 +66,7 @@ class Ok implements EagerResult
 
     public function andThen(Closure $callback): Result
     {
-        return $callback($this->value);
+        return $callback($this->unwrap());
     }
 
     public function orElse(Closure $callback): Result
