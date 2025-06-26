@@ -109,4 +109,20 @@ interface Result
      * @return Result<TReturn, EReturn>
      */
     public function orElse(Closure $callback): Result;
+
+    /**
+     * Pattern-matches on the result, executing the appropriate callback.
+     *
+     * If the result is Ok, calls the $ok callback with the value and returns its result.
+     * If the result is Err, calls the $err callback with the error and returns its result.
+     *
+     * @template TReturn
+     * @template EReturn
+     *
+     * @param Closure(T): TReturn $ok
+     * @param Closure(E): EReturn $err
+     *
+     * @return TReturn|EReturn
+     */
+    public function match(Closure $ok, Closure $err): mixed;
 }

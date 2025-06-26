@@ -218,6 +218,12 @@ class ErrTest extends TestCase
         $this->assertInstanceOf(Err::class, $result);
         $this->assertSame(3, $result->unwrapErr());
     }
+
+    #[Test]
+    public function match(): void
+    {
+        $this->assertSame(2, new Err(1)->match(fn () => 1, fn () => 2));
+    }
 }
 
 class ErrValue

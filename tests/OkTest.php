@@ -218,6 +218,12 @@ class OkTest extends TestCase
         $this->assertInstanceOf(Ok::class, $result);
         $this->assertSame(2, $result->unwrap());
     }
+
+    #[Test]
+    public function match(): void
+    {
+        $this->assertSame(1, new Ok(1)->match(fn () => 1, fn () => 2));
+    }
 }
 
 class OkValue
