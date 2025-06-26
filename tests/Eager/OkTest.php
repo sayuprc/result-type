@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Tests;
+namespace Tests\Eager;
 
 use Closure;
 use LogicException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use ResultType\Ok;
+use ResultType\Eager\Ok;
 use ResultType\Result;
 use stdClass;
 

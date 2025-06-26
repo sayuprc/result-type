@@ -2,17 +2,18 @@
 
 declare(strict_types=1);
 
-namespace ResultType;
+namespace ResultType\Eager;
 
 use Closure;
 use LogicException;
+use ResultType\Result;
 
 /**
  * @template-covariant E
  *
- * @template-implements Result<never, E>
+ * @template-implements EagerResult<never, E>
  */
-class Err implements Result
+class Err implements EagerResult
 {
     /**
      * @param E $error
