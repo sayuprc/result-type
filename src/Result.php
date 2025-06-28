@@ -53,7 +53,7 @@ interface Result
      *
      * @param Closure(T): TReturn $callback
      *
-     * @return Result<TReturn, E>
+     * @return Result<T|TReturn, E>
      */
     public function map(Closure $callback): Result;
 
