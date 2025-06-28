@@ -66,7 +66,7 @@ interface Result
      *
      * @param Closure(T): Result<TReturn, EReturn> $callback
      *
-     * @return Result<TReturn, EReturn>
+     * @return Result<T|TReturn, E|EReturn>
      */
     public function andThen(Closure $callback): Result;
 
@@ -97,7 +97,7 @@ interface Result
      *
      * @param Closure(E): EReturn $callback
      *
-     * @return Result<T, EReturn>
+     * @return Result<T, E|EReturn>
      */
     public function mapErr(Closure $callback): Result;
 
@@ -110,7 +110,7 @@ interface Result
      *
      * @param Closure(E): Result<TReturn, EReturn> $callback
      *
-     * @return Result<TReturn, EReturn>
+     * @return Result<T|TReturn, E|EReturn>
      */
     public function orElse(Closure $callback): Result;
 

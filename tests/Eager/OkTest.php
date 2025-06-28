@@ -10,7 +10,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use ResultType\Eager\Ok;
-use ResultType\Lazy\Ok as LazyOk;
+use ResultType\Lazy\LazyResult;
 use ResultType\Result;
 use stdClass;
 
@@ -231,7 +231,7 @@ class OkTest extends TestCase
     {
         $result = new Ok(1)->toLazy();
 
-        $this->assertInstanceOf(LazyOk::class, $result);
+        $this->assertInstanceOf(LazyResult::class, $result);
     }
 }
 
