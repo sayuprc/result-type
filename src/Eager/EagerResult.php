@@ -8,8 +8,13 @@ use ResultType\Lazy\LazyResult;
 use ResultType\Result;
 
 /**
- * @template-covariant T
- * @template-covariant E
+ * An interface for an eagerly evaluated Result type.
+ *
+ * Its state as either Ok or Err is determined at the time of instantiation.
+ * It is suitable for operations with low computational cost or when the result is needed immediately.
+ *
+ * @template-covariant T Type of the value on success.
+ * @template-covariant E Type of the error on failure.
  *
  * @template-extends Result<T, E>
  */

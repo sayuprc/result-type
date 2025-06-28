@@ -56,6 +56,11 @@ class Err implements LazyResult
         return $this;
     }
 
+    public function andThen(Closure $callback): Result
+    {
+        return $this;
+    }
+
     public function unwrapErr(): mixed
     {
         return $this->evaluate();
@@ -69,11 +74,6 @@ class Err implements LazyResult
     public function mapErr(Closure $callback): Result
     {
         return new Err(fn () => $callback($this->unwrapErr()));
-    }
-
-    public function andThen(Closure $callback): Result
-    {
-        return $this;
     }
 
     public function orElse(Closure $callback): Result

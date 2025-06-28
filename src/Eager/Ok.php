@@ -49,6 +49,11 @@ class Ok implements EagerResult
         return new Ok($callback($this->unwrap()));
     }
 
+    public function andThen(Closure $callback): Result
+    {
+        return $callback($this->unwrap());
+    }
+
     public function unwrapErr(): mixed
     {
         throw new LogicException('Result is not Err.');
@@ -62,11 +67,6 @@ class Ok implements EagerResult
     public function mapErr(Closure $callback): Result
     {
         return $this;
-    }
-
-    public function andThen(Closure $callback): Result
-    {
-        return $callback($this->unwrap());
     }
 
     public function orElse(Closure $callback): Result
