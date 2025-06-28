@@ -58,6 +58,19 @@ interface Result
     public function map(Closure $callback): Result;
 
     /**
+     * If the result is Ok, applies the callback to the contained value and returns the resulting Result.
+     * If the result is Err, the callback is not applied and the original Err is returned.
+     *
+     * @template TReturn
+     * @template EReturn
+     *
+     * @param Closure(T): Result<TReturn, EReturn> $callback
+     *
+     * @return Result<TReturn, EReturn>
+     */
+    public function andThen(Closure $callback): Result;
+
+    /**
      * Returns the error if the result is Err.
      * Throws an exception if the result is Ok.
      *
@@ -87,19 +100,6 @@ interface Result
      * @return Result<T, EReturn>
      */
     public function mapErr(Closure $callback): Result;
-
-    /**
-     * If the result is Ok, applies the callback to the contained value and returns the resulting Result.
-     * If the result is Err, the callback is not applied and the original Err is returned.
-     *
-     * @template TReturn
-     * @template EReturn
-     *
-     * @param Closure(T): Result<TReturn, EReturn> $callback
-     *
-     * @return Result<TReturn, EReturn>
-     */
-    public function andThen(Closure $callback): Result;
 
     /**
      * If the result is Err, applies the callback to the contained error and returns the resulting Result.

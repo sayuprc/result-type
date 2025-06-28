@@ -49,6 +49,11 @@ class Err implements EagerResult
         return $this;
     }
 
+    public function andThen(Closure $callback): Result
+    {
+        return $this;
+    }
+
     public function unwrapErr(): mixed
     {
         return $this->error;
@@ -62,11 +67,6 @@ class Err implements EagerResult
     public function mapErr(Closure $callback): Result
     {
         return new Err($callback($this->unwrapErr()));
-    }
-
-    public function andThen(Closure $callback): Result
-    {
-        return $this;
     }
 
     public function orElse(Closure $callback): Result

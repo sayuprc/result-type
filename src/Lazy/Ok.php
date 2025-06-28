@@ -56,6 +56,11 @@ class Ok implements LazyResult
         return new Ok(fn () => $callback($this->unwrap()));
     }
 
+    public function andThen(Closure $callback): Result
+    {
+        return new Ok(fn () => $callback($this->unwrap())->unwrap());
+    }
+
     public function unwrapErr(): mixed
     {
         throw new LogicException('Result is not Err.');
@@ -69,11 +74,6 @@ class Ok implements LazyResult
     public function mapErr(Closure $callback): Result
     {
         return $this;
-    }
-
-    public function andThen(Closure $callback): Result
-    {
-        return new Ok(fn () => $callback($this->unwrap())->unwrap());
     }
 
     public function orElse(Closure $callback): Result
