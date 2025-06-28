@@ -10,7 +10,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use ResultType\Eager\Err;
-use ResultType\Lazy\Err as LazyErr;
+use ResultType\Lazy\LazyResult;
 use ResultType\Result;
 use stdClass;
 
@@ -231,7 +231,7 @@ class ErrTest extends TestCase
     {
         $result = new Err(1)->toLazy();
 
-        $this->assertInstanceOf(LazyErr::class, $result);
+        $this->assertInstanceOf(LazyResult::class, $result);
     }
 }
 

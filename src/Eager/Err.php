@@ -6,7 +6,6 @@ namespace ResultType\Eager;
 
 use Closure;
 use LogicException;
-use ResultType\Lazy\Err as LazyErr;
 use ResultType\Lazy\LazyResult;
 use ResultType\Result;
 
@@ -90,6 +89,6 @@ class Err implements EagerResult
 
     public function toLazy(): LazyResult
     {
-        return new LazyErr(fn () => $this->unwrapErr());
+        return new LazyResult(fn () => $this);
     }
 }
