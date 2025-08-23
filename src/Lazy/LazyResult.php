@@ -11,7 +11,7 @@ use ResultType\Eager\Ok;
 use ResultType\Result;
 
 /**
- * An implements for a lazily evaluated Result type.
+ * An implementation for a lazily evaluated Result type.
  *
  * The computation of the result is deferred until the value is actually needed.
  * The constructor accepts a closure that represents the computation,
@@ -138,7 +138,7 @@ class LazyResult implements Result
      */
     public function toEager(): EagerResult
     {
-        return  $this->isOk()
+        return $this->isOk()
             ? new Ok($this->unwrap())
             : new Err($this->unwrapErr());
     }
