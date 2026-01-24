@@ -19,8 +19,8 @@ composer require sayuprc/result-type
 ```php
 <?php
 
-use ResultType\Eager\Err;
-use ResultType\Eager\Ok;
+use ResultType\Err;
+use ResultType\Ok;
 use ResultType\Result;
 
 class Success
