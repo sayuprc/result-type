@@ -2,19 +2,17 @@
 
 declare(strict_types=1);
 
-namespace ResultType\Eager;
+namespace ResultType;
 
 use Closure;
 use LogicException;
-use ResultType\Lazy\LazyResult;
-use ResultType\Result;
 
 /**
  * @template-covariant T
  *
- * @template-implements EagerResult<T, never>
+ * @template-implements Result<T, never>
  */
-class Ok implements EagerResult
+class Ok implements Result
 {
     /**
      * @param T $value
@@ -85,10 +83,5 @@ class Ok implements EagerResult
     public function match(Closure $ok, Closure $err): mixed
     {
         return $ok($this->unwrap());
-    }
-
-    public function toLazy(): LazyResult
-    {
-        return new LazyResult(fn () => $this);
     }
 }

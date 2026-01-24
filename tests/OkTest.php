@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Tests\Eager;
+namespace Tests;
 
 use Closure;
 use LogicException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use ResultType\Eager\Ok;
-use ResultType\Lazy\LazyResult;
+use ResultType\Ok;
 use ResultType\Result;
 use stdClass;
 
@@ -224,14 +223,6 @@ class OkTest extends TestCase
     public function match(): void
     {
         $this->assertSame(1, new Ok(1)->match(fn () => 1, fn () => 2));
-    }
-
-    #[Test]
-    public function toLazy(): void
-    {
-        $result = new Ok(1)->toLazy();
-
-        $this->assertInstanceOf(LazyResult::class, $result);
     }
 }
 
