@@ -141,16 +141,16 @@ abstract class Result
      * @param Result<NewT1, NewE> $result1
      * @param Result<NewT2, NewE> $result2
      *
-     * @return Result<array{NewT1, NewT2}|NewT1|NewT2, NewE>
+     * @return Result<array{NewT1, NewT2}, NewE>
      */
     public static function combine(Result $result1, Result $result2): Result
     {
         if ($result1->isErr()) {
-            return $result1;
+            return new Err($result1->unwrapErr());
         }
 
         if ($result2->isErr()) {
-            return $result2;
+            return new Err($result2->unwrapErr());
         }
 
         return new Ok([
@@ -174,20 +174,20 @@ abstract class Result
      * @param Result<NewT2, NewE> $result2
      * @param Result<NewT3, NewE> $result3
      *
-     * @return Result<array{NewT1, NewT2, NewT3}|NewT1|NewT2|NewT3, NewE>
+     * @return Result<array{NewT1, NewT2, NewT3}, NewE>
      */
     public static function combine3(Result $result1, Result $result2, Result $result3): Result
     {
         if ($result1->isErr()) {
-            return $result1;
+            return new Err($result1->unwrapErr());
         }
 
         if ($result2->isErr()) {
-            return $result2;
+            return new Err($result2->unwrapErr());
         }
 
         if ($result3->isErr()) {
-            return $result3;
+            return new Err($result3->unwrapErr());
         }
 
         return new Ok([
@@ -214,24 +214,24 @@ abstract class Result
      * @param Result<NewT3, NewE> $result3
      * @param Result<NewT4, NewE> $result4
      *
-     * @return Result<array{NewT1, NewT2, NewT3, NewT4}|NewT1|NewT2|NewT3|NewT4, NewE>
+     * @return Result<array{NewT1, NewT2, NewT3, NewT4}, NewE>
      */
     public static function combine4(Result $result1, Result $result2, Result $result3, Result $result4): Result
     {
         if ($result1->isErr()) {
-            return $result1;
+            return new Err($result1->unwrapErr());
         }
 
         if ($result2->isErr()) {
-            return $result2;
+            return new Err($result2->unwrapErr());
         }
 
         if ($result3->isErr()) {
-            return $result3;
+            return new Err($result3->unwrapErr());
         }
 
         if ($result4->isErr()) {
-            return $result4;
+            return new Err($result4->unwrapErr());
         }
 
         return new Ok([
@@ -261,28 +261,28 @@ abstract class Result
      * @param Result<NewT4, NewE> $result4
      * @param Result<NewT5, NewE> $result5
      *
-     * @return Result<array{NewT1, NewT2, NewT3, NewT4, NewT5}|NewT1|NewT2|NewT3|NewT4|NewT5, NewE>
+     * @return Result<array{NewT1, NewT2, NewT3, NewT4, NewT5}, NewE>
      */
     public static function combine5(Result $result1, Result $result2, Result $result3, Result $result4, Result $result5): Result
     {
         if ($result1->isErr()) {
-            return $result1;
+            return new Err($result1->unwrapErr());
         }
 
         if ($result2->isErr()) {
-            return $result2;
+            return new Err($result2->unwrapErr());
         }
 
         if ($result3->isErr()) {
-            return $result3;
+            return new Err($result3->unwrapErr());
         }
 
         if ($result4->isErr()) {
-            return $result4;
+            return new Err($result4->unwrapErr());
         }
 
         if ($result5->isErr()) {
-            return $result5;
+            return new Err($result5->unwrapErr());
         }
 
         return new Ok([
@@ -315,7 +315,7 @@ abstract class Result
      * @param Result<NewT5, NewE> $result5
      * @param Result<NewT6, NewE> $result6
      *
-     * @return Result<array{NewT1, NewT2, NewT3, NewT4, NewT5, NewT6}|NewT1|NewT2|NewT3|NewT4|NewT5|NewT6, NewE>
+     * @return Result<array{NewT1, NewT2, NewT3, NewT4, NewT5, NewT6}, NewE>
      */
     public static function combine6(
         Result $result1,
@@ -326,27 +326,27 @@ abstract class Result
         Result $result6,
     ): Result {
         if ($result1->isErr()) {
-            return $result1;
+            return new Err($result1->unwrapErr());
         }
 
         if ($result2->isErr()) {
-            return $result2;
+            return new Err($result2->unwrapErr());
         }
 
         if ($result3->isErr()) {
-            return $result3;
+            return new Err($result3->unwrapErr());
         }
 
         if ($result4->isErr()) {
-            return $result4;
+            return new Err($result4->unwrapErr());
         }
 
         if ($result5->isErr()) {
-            return $result5;
+            return new Err($result5->unwrapErr());
         }
 
         if ($result6->isErr()) {
-            return $result6;
+            return new Err($result6->unwrapErr());
         }
 
         return new Ok([
@@ -382,7 +382,7 @@ abstract class Result
      * @param Result<NewT6, NewE> $result6
      * @param Result<NewT7, NewE> $result7
      *
-     * @return Result<array{NewT1, NewT2, NewT3, NewT4, NewT5, NewT6, NewT7}|NewT1|NewT2|NewT3|NewT4|NewT5|NewT6|NewT7, NewE>
+     * @return Result<array{NewT1, NewT2, NewT3, NewT4, NewT5, NewT6, NewT7}, NewE>
      */
     public static function combine7(
         Result $result1,
@@ -394,31 +394,31 @@ abstract class Result
         Result $result7,
     ): Result {
         if ($result1->isErr()) {
-            return $result1;
+            return new Err($result1->unwrapErr());
         }
 
         if ($result2->isErr()) {
-            return $result2;
+            return new Err($result2->unwrapErr());
         }
 
         if ($result3->isErr()) {
-            return $result3;
+            return new Err($result3->unwrapErr());
         }
 
         if ($result4->isErr()) {
-            return $result4;
+            return new Err($result4->unwrapErr());
         }
 
         if ($result5->isErr()) {
-            return $result5;
+            return new Err($result5->unwrapErr());
         }
 
         if ($result6->isErr()) {
-            return $result6;
+            return new Err($result6->unwrapErr());
         }
 
         if ($result7->isErr()) {
-            return $result7;
+            return new Err($result7->unwrapErr());
         }
 
         return new Ok([
@@ -457,7 +457,7 @@ abstract class Result
      * @param Result<NewT7, NewE> $result7
      * @param Result<NewT8, NewE> $result8
      *
-     * @return Result<array{NewT1, NewT2, NewT3, NewT4, NewT5, NewT6, NewT7, NewT8}|NewT1|NewT2|NewT3|NewT4|NewT5|NewT6|NewT7|NewT8, NewE>
+     * @return Result<array{NewT1, NewT2, NewT3, NewT4, NewT5, NewT6, NewT7, NewT8}, NewE>
      */
     public static function combine8(
         Result $result1,
@@ -470,35 +470,35 @@ abstract class Result
         Result $result8,
     ): Result {
         if ($result1->isErr()) {
-            return $result1;
+            return new Err($result1->unwrapErr());
         }
 
         if ($result2->isErr()) {
-            return $result2;
+            return new Err($result2->unwrapErr());
         }
 
         if ($result3->isErr()) {
-            return $result3;
+            return new Err($result3->unwrapErr());
         }
 
         if ($result4->isErr()) {
-            return $result4;
+            return new Err($result4->unwrapErr());
         }
 
         if ($result5->isErr()) {
-            return $result5;
+            return new Err($result5->unwrapErr());
         }
 
         if ($result6->isErr()) {
-            return $result6;
+            return new Err($result6->unwrapErr());
         }
 
         if ($result7->isErr()) {
-            return $result7;
+            return new Err($result7->unwrapErr());
         }
 
         if ($result8->isErr()) {
-            return $result8;
+            return new Err($result8->unwrapErr());
         }
 
         return new Ok([
@@ -540,7 +540,7 @@ abstract class Result
      * @param Result<NewT8, NewE> $result8
      * @param Result<NewT9, NewE> $result9
      *
-     * @return Result<array{NewT1, NewT2, NewT3, NewT4, NewT5, NewT6, NewT7, NewT8, NewT9}|NewT1|NewT2|NewT3|NewT4|NewT5|NewT6|NewT7|NewT8|NewT9, NewE>
+     * @return Result<array{NewT1, NewT2, NewT3, NewT4, NewT5, NewT6, NewT7, NewT8, NewT9}, NewE>
      */
     public static function combine9(
         Result $result1,
@@ -554,39 +554,39 @@ abstract class Result
         Result $result9,
     ): Result {
         if ($result1->isErr()) {
-            return $result1;
+            return new Err($result1->unwrapErr());
         }
 
         if ($result2->isErr()) {
-            return $result2;
+            return new Err($result2->unwrapErr());
         }
 
         if ($result3->isErr()) {
-            return $result3;
+            return new Err($result3->unwrapErr());
         }
 
         if ($result4->isErr()) {
-            return $result4;
+            return new Err($result4->unwrapErr());
         }
 
         if ($result5->isErr()) {
-            return $result5;
+            return new Err($result5->unwrapErr());
         }
 
         if ($result6->isErr()) {
-            return $result6;
+            return new Err($result6->unwrapErr());
         }
 
         if ($result7->isErr()) {
-            return $result7;
+            return new Err($result7->unwrapErr());
         }
 
         if ($result8->isErr()) {
-            return $result8;
+            return new Err($result8->unwrapErr());
         }
 
         if ($result9->isErr()) {
-            return $result9;
+            return new Err($result9->unwrapErr());
         }
 
         return new Ok([
@@ -631,7 +631,7 @@ abstract class Result
      * @param Result<NewT9, NewE>  $result9
      * @param Result<NewT10, NewE> $result10
      *
-     * @return Result<array{NewT1, NewT2, NewT3, NewT4, NewT5, NewT6, NewT7, NewT8, NewT9, NewT10}|NewT1|NewT2|NewT3|NewT4|NewT5|NewT6|NewT7|NewT8|NewT9|NewT10, NewE>
+     * @return Result<array{NewT1, NewT2, NewT3, NewT4, NewT5, NewT6, NewT7, NewT8, NewT9, NewT10}, NewE>
      */
     public static function combine10(
         Result $result1,
@@ -646,43 +646,43 @@ abstract class Result
         Result $result10,
     ): Result {
         if ($result1->isErr()) {
-            return $result1;
+            return new Err($result1->unwrapErr());
         }
 
         if ($result2->isErr()) {
-            return $result2;
+            return new Err($result2->unwrapErr());
         }
 
         if ($result3->isErr()) {
-            return $result3;
+            return new Err($result3->unwrapErr());
         }
 
         if ($result4->isErr()) {
-            return $result4;
+            return new Err($result4->unwrapErr());
         }
 
         if ($result5->isErr()) {
-            return $result5;
+            return new Err($result5->unwrapErr());
         }
 
         if ($result6->isErr()) {
-            return $result6;
+            return new Err($result6->unwrapErr());
         }
 
         if ($result7->isErr()) {
-            return $result7;
+            return new Err($result7->unwrapErr());
         }
 
         if ($result8->isErr()) {
-            return $result8;
+            return new Err($result8->unwrapErr());
         }
 
         if ($result9->isErr()) {
-            return $result9;
+            return new Err($result9->unwrapErr());
         }
 
         if ($result10->isErr()) {
-            return $result10;
+            return new Err($result10->unwrapErr());
         }
 
         return new Ok([
