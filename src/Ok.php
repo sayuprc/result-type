@@ -6,6 +6,7 @@ namespace ResultType;
 
 use Closure;
 use LogicException;
+use Override;
 
 /**
  * @template-covariant T
@@ -21,21 +22,25 @@ class Ok extends Result
     {
     }
 
+    #[Override]
     public function isOk(): bool
     {
         return true;
     }
 
+    #[Override]
     public function isErr(): bool
     {
         return false;
     }
 
+    #[Override]
     public function unwrap(): mixed
     {
         return $this->value;
     }
 
+    #[Override]
     public function unwrapOr(mixed $default): mixed
     {
         return $this->unwrap();
@@ -48,21 +53,25 @@ class Ok extends Result
      *
      * @return Result<TReturn, never>
      */
+    #[Override]
     public function map(Closure $callback): Result
     {
         return new Ok($callback($this->unwrap()));
     }
 
+    #[Override]
     public function andThen(Closure $callback): Result
     {
         return $callback($this->unwrap());
     }
 
+    #[Override]
     public function unwrapErr(): mixed
     {
         throw new LogicException('Result is not Err.');
     }
 
+    #[Override]
     public function unwrapErrOr(mixed $default): mixed
     {
         return $default;
@@ -75,11 +84,13 @@ class Ok extends Result
      *
      * @return Ok<T>
      */
+    #[Override]
     public function mapErr(Closure $callback): Result
     {
         return $this;
     }
 
+    #[Override]
     public function orElse(Closure $callback): Result
     {
         return $this;
@@ -94,6 +105,7 @@ class Ok extends Result
      *
      * @return TReturn
      */
+    #[Override]
     public function match(Closure $ok, Closure $err): mixed
     {
         return $ok($this->unwrap());
