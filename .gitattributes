@@ -6,7 +6,7 @@
 compose.yaml export-ignore
 Dockerfile export-ignore
 ecs.php export-ignore
-Makefile export-ignore
+mise.toml export-ignore
 php.ini export-ignore
 phpstan.neon export-ignore
 phpunit.xml export-ignore

@@ -34,7 +34,7 @@
         "sort-packages": true
     },
     "scripts": {
-        "test": "phpunit",
+        "tests": "phpunit",
         "phpstan": "phpstan analyse --memory-limit=-1 --no-progress",
         "phpstan-clear-cache": "phpstan clear-result-cache",
         "ecs": "ecs check --ansi --no-progress-bar",

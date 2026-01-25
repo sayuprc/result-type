@@ -1,0 +1,54 @@
+[vars]
+uid = "$(id -u)"
+user_name = "$(id -un)"
+gid = "$(id -g)"
+group_name = "$(id -gn)"
+
+[tasks.build]
+description = "Build Docker image for development"
+run = '''
+docker build -t result-type:0.x . \
+  --build-arg UID={{vars.uid}} \
+  --build-arg GID={{vars.gid}} \
+  --build-arg USERNAME={{vars.user_name}} \
+  --build-arg GROUPNAME={{vars.group_name}}
+'''
+
+[tasks.up]
+description = "Start containers"
+run = "docker compose up -d"
+
+[tasks.down]
+description = "Stop and remove containers"
+run = "docker compose down"
+
+[tasks.php]
+description = "Enter PHP container"
+run = "docker compose exec php bash"
+
+[tasks."composer:install"]
+description = "Install Composer packages"
+run = "docker compose run --rm php composer install"
+
+[tasks.phpstan]
+description = "Run PHPStan"
+usage = 'arg "[path]" var=#true help="Path to analyze"'
+run = "docker compose exec php composer phpstan ${usage_path}"
+
+[tasks."phpstan:clear-cache"]
+description = "Clear PHPStan cache"
+run = "docker compose exec php composer phpstan-clear-cache"
+
+[tasks.ecs]
+description = "Run ECS to check code style"
+usage = 'arg "[path]" var=#true help="Path to check"'
+run = "docker compose exec php composer ecs ${usage_path}"
+
+[tasks."ecs:fix"]
+description = "Run ECS to fix code style"
+usage = 'arg "[path]" var=#true help="Path to fix"'
+run = "docker compose exec php composer ecs-fix ${usage_path}"
+
+[tasks."tests"]
+description = "Run all tests"
+run = "docker compose exec php composer tests"
