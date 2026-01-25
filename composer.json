@@ -9,7 +9,7 @@
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-strict-rules": "^2.0",
         "phpunit/phpunit": "^12.1",
-        "symplify/easy-coding-standard": "^12.5"
+        "symplify/easy-coding-standard": "^13.0"
     },
     "license": "MIT",
     "autoload": {
