@@ -59,6 +59,14 @@ class Err extends Result
         return $this;
     }
 
+    /**
+     * @template TReturn
+     * @template EReturn
+     *
+     * @param Closure(never): Result<TReturn, EReturn> $callback
+     *
+     * @return Err<E>
+     */
     #[Override]
     public function andThen(Closure $callback): Result
     {
@@ -90,6 +98,14 @@ class Err extends Result
         return new Err($callback($this->unwrapErr()));
     }
 
+    /**
+     * @template TReturn
+     * @template EReturn
+     *
+     * @param Closure(E): Result<TReturn, EReturn> $callback
+     *
+     * @return Result<TReturn, EReturn>
+     */
     #[Override]
     public function orElse(Closure $callback): Result
     {
