@@ -66,7 +66,7 @@ abstract class Result
      *
      * @param Closure(T): Result<TReturn, EReturn> $callback
      *
-     * @return Result<T|TReturn, E|EReturn>
+     * @return Result<TReturn, E|EReturn>
      */
     abstract public function andThen(Closure $callback): Result;
 
@@ -110,7 +110,7 @@ abstract class Result
      *
      * @param Closure(E): Result<TReturn, EReturn> $callback
      *
-     * @return Result<T|TReturn, E|EReturn>
+     * @return Result<T|TReturn, EReturn>
      */
     abstract public function orElse(Closure $callback): Result;
 

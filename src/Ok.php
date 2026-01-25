@@ -59,6 +59,14 @@ class Ok extends Result
         return new Ok($callback($this->unwrap()));
     }
 
+    /**
+     * @template TReturn
+     * @template EReturn
+     *
+     * @param Closure(T): Result<TReturn, EReturn> $callback
+     *
+     * @return Result<TReturn, EReturn>
+     */
     #[Override]
     public function andThen(Closure $callback): Result
     {
@@ -90,6 +98,14 @@ class Ok extends Result
         return $this;
     }
 
+    /**
+     * @template TReturn
+     * @template EReturn
+     *
+     * @param Closure(never): Result<TReturn, EReturn> $callback
+     *
+     * @return Ok<T>
+     */
     #[Override]
     public function orElse(Closure $callback): Result
     {
