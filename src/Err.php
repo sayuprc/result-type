@@ -10,9 +10,9 @@ use LogicException;
 /**
  * @template-covariant E
  *
- * @template-implements Result<never, E>
+ * @template-extends Result<never, E>
  */
-class Err implements Result
+class Err extends Result
 {
     /**
      * @param E $error
@@ -41,6 +41,13 @@ class Err implements Result
         return $default;
     }
 
+    /**
+     * @template TReturn
+     *
+     * @param Closure(never): TReturn $callback
+     *
+     * @return Err<E>
+     */
     public function map(Closure $callback): Result
     {
         return $this;
@@ -61,6 +68,13 @@ class Err implements Result
         return $this->unwrapErr();
     }
 
+    /**
+     * @template EReturn
+     *
+     * @param Closure(E): EReturn $callback
+     *
+     * @return Result<never, EReturn>
+     */
     public function mapErr(Closure $callback): Result
     {
         return new Err($callback($this->unwrapErr()));
