@@ -41,6 +41,13 @@ class Ok extends Result
         return $this->unwrap();
     }
 
+    /**
+     * @template TReturn
+     *
+     * @param Closure(T): TReturn $callback
+     *
+     * @return Result<TReturn, never>
+     */
     public function map(Closure $callback): Result
     {
         return new Ok($callback($this->unwrap()));
@@ -61,6 +68,13 @@ class Ok extends Result
         return $default;
     }
 
+    /**
+     * @template EReturn
+     *
+     * @param Closure(never): EReturn $callback
+     *
+     * @return Ok<T>
+     */
     public function mapErr(Closure $callback): Result
     {
         return $this;

@@ -41,6 +41,13 @@ class Err extends Result
         return $default;
     }
 
+    /**
+     * @template TReturn
+     *
+     * @param Closure(never): TReturn $callback
+     *
+     * @return Err<E>
+     */
     public function map(Closure $callback): Result
     {
         return $this;
@@ -61,6 +68,13 @@ class Err extends Result
         return $this->unwrapErr();
     }
 
+    /**
+     * @template EReturn
+     *
+     * @param Closure(E): EReturn $callback
+     *
+     * @return Result<never, EReturn>
+     */
     public function mapErr(Closure $callback): Result
     {
         return new Err($callback($this->unwrapErr()));
