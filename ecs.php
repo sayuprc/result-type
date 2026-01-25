@@ -14,6 +14,8 @@ return ECSConfig::configure()
     ->withSpacing(Option::INDENTATION_SPACES, PHP_EOL)
     ->withPhpCsFixerSets(psr2: true, psr12: true)
     ->withRules([
+        \PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace\LanguageConstructSpacingSniff::class,
+
         \PhpCsFixer\Fixer\ArrayNotation\ArraySyntaxFixer::class,
         \PhpCsFixer\Fixer\ArrayNotation\NoMultilineWhitespaceAroundDoubleArrowFixer::class,
         \PhpCsFixer\Fixer\ArrayNotation\NoWhitespaceBeforeCommaInArrayFixer::class,
@@ -26,7 +28,7 @@ return ECSConfig::configure()
         \PhpCsFixer\Fixer\Casing\NativeFunctionCasingFixer::class,
         \PhpCsFixer\Fixer\Casing\NativeTypeDeclarationCasingFixer::class,
 
-        \PhpCsFixer\Fixer\ClassNotation\ClassAttributesSeparationFixer::class,
+        \PhpCsFixer\Fixer\ClassNotation\ModifierKeywordsFixer::class,
         \PhpCsFixer\Fixer\ClassNotation\OrderedInterfacesFixer::class,
         \PhpCsFixer\Fixer\ClassNotation\OrderedTraitsFixer::class,
         \PhpCsFixer\Fixer\ClassNotation\OrderedTypesFixer::class,
@@ -39,11 +41,12 @@ return ECSConfig::configure()
         \PhpCsFixer\Fixer\ControlStructure\IncludeFixer::class,
         \PhpCsFixer\Fixer\ControlStructure\NoUselessElseFixer::class,
         \PhpCsFixer\Fixer\ControlStructure\SimplifiedIfReturnFixer::class,
-        \PhpCsFixer\Fixer\ControlStructure\TrailingCommaInMultilineFixer::class,
 
+        \PhpCsFixer\Fixer\FunctionNotation\FunctionDeclarationFixer::class,
         \PhpCsFixer\Fixer\FunctionNotation\LambdaNotUsedImportFixer::class,
         \PhpCsFixer\Fixer\FunctionNotation\NullableTypeDeclarationForDefaultNullValueFixer::class,
 
+        \PhpCsFixer\Fixer\Import\GlobalNamespaceImportFixer::class,
         \PhpCsFixer\Fixer\Import\NoUnusedImportsFixer::class,
 
         \PhpCsFixer\Fixer\LanguageConstruct\ExplicitIndirectVariableFixer::class,
@@ -52,6 +55,7 @@ return ECSConfig::configure()
 
         \PhpCsFixer\Fixer\NamespaceNotation\NoLeadingNamespaceWhitespaceFixer::class,
 
+        \PhpCsFixer\Fixer\Operator\NewExpressionParenthesesFixer::class,
         \PhpCsFixer\Fixer\Operator\NoUselessConcatOperatorFixer::class,
         \PhpCsFixer\Fixer\Operator\NotOperatorWithSuccessorSpaceFixer::class,
         \PhpCsFixer\Fixer\Operator\ObjectOperatorWithoutWhitespaceFixer::class,
@@ -65,6 +69,7 @@ return ECSConfig::configure()
         \PhpCsFixer\Fixer\Phpdoc\NoEmptyPhpdocFixer::class,
         \PhpCsFixer\Fixer\Phpdoc\PhpdocAddMissingParamAnnotationFixer::class,
         \PhpCsFixer\Fixer\Phpdoc\PhpdocAlignFixer::class,
+        \PhpCsFixer\Fixer\Phpdoc\PhpdocArrayTypeFixer::class,
         \PhpCsFixer\Fixer\Phpdoc\PhpdocIndentFixer::class,
         \PhpCsFixer\Fixer\Phpdoc\PhpdocInlineTagNormalizerFixer::class,
         \PhpCsFixer\Fixer\Phpdoc\PhpdocOrderByValueFixer::class,
@@ -107,19 +112,29 @@ return ECSConfig::configure()
     ->withConfiguredRule(\PhpCsFixer\Fixer\CastNotation\CastSpacesFixer::class, [
         'space' => 'none',
     ])
-    ->withConfiguredRule(\PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer::class, [
-        'operators' => [
-            '=>' => 'single_space',
-            '||' => 'align_single_space_minimal',
-            '&&' => 'align_single_space_minimal',
+    ->withConfiguredRule(\PhpCsFixer\Fixer\ClassNotation\ClassAttributesSeparationFixer::class, [
+        'elements' => [
+            'const' => 'one',
+            'method' => 'one',
+            'property' => 'one',
+            'trait_import' => 'none',
+            'case' => 'one',
         ],
     ])
-    ->withConfiguredRule(\PhpCsFixer\Fixer\Operator\ConcatSpaceFixer::class, [
-        'spacing' => 'one',
+    ->withConfiguredRule(\PhpCsFixer\Fixer\ControlStructure\TrailingCommaInMultilineFixer::class, [
+        'elements' => [
+            'arguments',
+            'array_destructuring',
+            'arrays',
+            'match',
+            'parameters',
+        ],
     ])
-    ->withConfiguredRule(\PhpCsFixer\Fixer\Phpdoc\PhpdocTypesOrderFixer::class, [
-        'null_adjustment' => 'always_last',
-        'sort_algorithm' => 'none',
+    ->withConfiguredRule(\PhpCsFixer\Fixer\FunctionNotation\MethodArgumentSpaceFixer::class, [
+        'attribute_placement' => 'standalone',
+    ])
+    ->withConfiguredRule(\PhpCsFixer\Fixer\FunctionNotation\MultilinePromotedPropertiesFixer::class, [
+        'minimum_number_of_parameters' => 2,
     ])
     ->withConfiguredRule(\PhpCsFixer\Fixer\Import\FullyQualifiedStrictTypesFixer::class, [
         'import_symbols' => true,
@@ -132,6 +147,23 @@ return ECSConfig::configure()
             'const',
         ],
         'sort_algorithm' => 'alpha',
+    ])
+    ->withConfiguredRule(\PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer::class, [
+        'operators' => [
+            '=>' => 'single_space',
+            '||' => 'align_single_space_minimal',
+            '&&' => 'align_single_space_minimal',
+        ],
+    ])
+    ->withConfiguredRule(\PhpCsFixer\Fixer\Operator\ConcatSpaceFixer::class, [
+        'spacing' => 'one',
+    ])
+    ->withConfiguredRule(\PhpCsFixer\Fixer\Phpdoc\NoSuperfluousPhpdocTagsFixer::class, [
+        'remove_inheritdoc' => true,
+    ])
+    ->withConfiguredRule(\PhpCsFixer\Fixer\Phpdoc\PhpdocTypesOrderFixer::class, [
+        'null_adjustment' => 'always_last',
+        'sort_algorithm' => 'none',
     ])
     ->withConfiguredRule(\PhpCsFixer\Fixer\Whitespace\NoExtraBlankLinesFixer::class, [
         'tokens' => [
