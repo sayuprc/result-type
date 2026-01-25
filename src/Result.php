@@ -7,24 +7,24 @@ namespace ResultType;
 use Closure;
 
 /**
- * Interface for a result type that represents either a success (Ok) or a failure (Err).
+ * Abstract class for a result type that represents either a success (Ok) or a failure (Err).
  *
  * Provides methods for inspecting, unwrapping, and transforming the result or error value.
  *
  * @template-covariant T Type of the value on success.
  * @template-covariant E Type of the error on failure.
  */
-interface Result
+abstract class Result
 {
     /**
      * Returns true if the result is Ok.
      */
-    public function isOk(): bool;
+    abstract public function isOk(): bool;
 
     /**
      * Returns true if the result is Err.
      */
-    public function isErr(): bool;
+    abstract public function isErr(): bool;
 
     /**
      * Returns the value if the result is Ok.
@@ -32,7 +32,7 @@ interface Result
      *
      * @return T
      */
-    public function unwrap(): mixed;
+    abstract public function unwrap(): mixed;
 
     /**
      * Returns the contained value if the result is Ok, otherwise returns the default value.
@@ -43,7 +43,7 @@ interface Result
      *
      * @return T|TDefault
      */
-    public function unwrapOr(mixed $default): mixed;
+    abstract public function unwrapOr(mixed $default): mixed;
 
     /**
      * If the result is Ok, applies the callback to the contained value and returns a new Ok.
@@ -55,7 +55,7 @@ interface Result
      *
      * @return Result<T|TReturn, E>
      */
-    public function map(Closure $callback): Result;
+    abstract public function map(Closure $callback): Result;
 
     /**
      * If the result is Ok, applies the callback to the contained value and returns the resulting Result.
@@ -68,7 +68,7 @@ interface Result
      *
      * @return Result<T|TReturn, E|EReturn>
      */
-    public function andThen(Closure $callback): Result;
+    abstract public function andThen(Closure $callback): Result;
 
     /**
      * Returns the error if the result is Err.
@@ -76,7 +76,7 @@ interface Result
      *
      * @return E
      */
-    public function unwrapErr(): mixed;
+    abstract public function unwrapErr(): mixed;
 
     /**
      * Returns the contained error if the result is Err, otherwise returns the default value.
@@ -87,7 +87,7 @@ interface Result
      *
      * @return E|EDefault
      */
-    public function unwrapErrOr(mixed $default): mixed;
+    abstract public function unwrapErrOr(mixed $default): mixed;
 
     /**
      * If the result is Err, applies the callback to the contained error and returns a new Err.
@@ -99,7 +99,7 @@ interface Result
      *
      * @return Result<T, E|EReturn>
      */
-    public function mapErr(Closure $callback): Result;
+    abstract public function mapErr(Closure $callback): Result;
 
     /**
      * If the result is Err, applies the callback to the contained error and returns the resulting Result.
@@ -112,7 +112,7 @@ interface Result
      *
      * @return Result<T|TReturn, E|EReturn>
      */
-    public function orElse(Closure $callback): Result;
+    abstract public function orElse(Closure $callback): Result;
 
     /**
      * If the result is Ok, executes the $ok callback and returns its result.
@@ -126,5 +126,5 @@ interface Result
      *
      * @return TReturn|EReturn
      */
-    public function match(Closure $ok, Closure $err): mixed;
+    abstract public function match(Closure $ok, Closure $err): mixed;
 }

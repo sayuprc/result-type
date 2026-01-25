@@ -10,9 +10,9 @@ use LogicException;
 /**
  * @template-covariant T
  *
- * @template-implements Result<T, never>
+ * @template-extends Result<T, never>
  */
-class Ok implements Result
+class Ok extends Result
 {
     /**
      * @param T $value
